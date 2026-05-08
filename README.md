@@ -182,6 +182,13 @@ This project is open-sourced under the MIT License.
 
 Walter Godson Nazike
 
+Open to:
+💼 Freelance | Remote | Hybrid | opportunities
+🤝 Collaborations
+📈 Networking with developers & founders
+
+#Laravel #PHP #WebDevelopment #SaaS #BuildInPublic #MySQL #BootstrapCSS #JavaScript #SoftwareEngineer #SoftwareDeveloper #FullStackDeveloper #Tech
+
 Connect with me:
 
 * [LinkedIn](https://www.linkedin.com/in/walter-godson)
