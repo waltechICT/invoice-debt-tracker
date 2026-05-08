@@ -1,0 +1,21 @@
+### Founder | Software Engineer | Full Stack Developer — Invoice and Debt Tracker (IDT)
+
+Building a Laravel-based SaaS application focused on helping businesses manage invoices, track debts, monitor payments, and automate customer reminders.
+
+Key responsibilities:
+
+* Designing and developing the application architecture
+* Implementing authentication and role-based access control
+* Building invoice and debt management modules
+* Developing dashboard analytics and reporting features
+* Managing database design and backend logic
+
+Tech Stack:
+Laravel, PHP, MySQL, Blade, JavaScript, Boostrap CSS
+
+Current Progress:
+
+* Laravel setup completed
+* Database configured
+* Authentication system implemented
+* Dashboard access working successfully

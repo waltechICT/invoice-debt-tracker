@@ -1,0 +1,6 @@
+Day 1
+•	Install Laravel 
+•	Setup database 
+•	Install auth (Breeze/Jetstream) 
+•	Test login/register 
+✅ You can log in

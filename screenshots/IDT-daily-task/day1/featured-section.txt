@@ -1,0 +1,15 @@
+🚀 Invoice and Debt Tracker (IDT)
+
+A Laravel SaaS application built to help businesses:
+✅ Manage invoices
+✅ Track debts
+✅ Monitor payments
+✅ Automate reminders
+
+Current Stack:
+Laravel • PHP • MySQL • Tailwind CSS
+
+Currently building in public and documenting the development journey.
+
+GitHub Repository:
+https://github.com/GodsonWalter/invoice-debt-tracker.git

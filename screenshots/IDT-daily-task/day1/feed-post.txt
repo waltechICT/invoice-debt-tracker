@@ -1,0 +1,41 @@
+Feeds
+------
+
+🚀 Day 1 Building My SaaS Project — Invoice and Debt Tracker (IDT)
+
+Today I completed the foundation setup for my Laravel SaaS application:
+
+✅ Installed Laravel
+✅ Setup MySQL database
+✅ Implemented authentication using Laravel Breeze
+✅ Tested login & registration system
+✅ Successfully logged into the dashboard 🎉
+
+This project is designed to help businesses:
+• Manage invoices
+• Track debts
+• Monitor payments
+• Automate reminders
+
+Tech Stack:
+⚡ Laravel
+⚡ PHP
+⚡ MySQL
+⚡ Blade
+⚡ Bootstrap CSS
+
+I’ll be documenting my progress publicly as I continue building.
+
+Upcoming features:
+🔹 Invoice management
+🔹 Debt tracking
+🔹 Reminder automation
+🔹 Admin dashboard
+🔹 Reports & analytics
+
+I’m open to:
+💼 Freelance | Remote | Hybrid | opportunities
+🤝 Collaborations
+📈 Networking with developers & founders
+
+#Laravel #PHP #WebDevelopment #SaaS #BuildInPublic #MySQL #BootstrapCSS #JavaScript #SoftwareEngineer #SoftwareDeveloper #FullStackDeveloper #Tech
