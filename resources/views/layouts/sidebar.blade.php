@@ -21,17 +21,17 @@
         <li class="nav-section-title">Network Audit</li> --}}
 
         {{-- tenant dropdown menu --}}
-        {{-- <li class="nav-item has-dropdown">
+        <li class="nav-item has-dropdown">
             <a href="{{ route('dashboard') }}" class="nav-link">
                 <i class="fa-solid fa-building fa-fw"></i>
                 <span>Tenants</span>
                 <i class="fa-solid fa-chevron-down dropdown-toggle-icon"></i>
             </a>
             <ul class="sidebar-dropdown-menu">
-                <li><a href="#">All Tenants</a></li>
-                <li><a href="#">Add Tenant</a></li>
+                <li><a href="{{ route('tenant.index') }}">Tenants</a></li>
+                <li><a href="{{ route('tenant.create') }}">Add Tenant</a></li>
             </ul>
-        </li> --}}
+        </li>
 
 
 

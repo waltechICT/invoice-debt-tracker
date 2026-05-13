@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> {{ config('app.name', 'IDT') }} || @yield('page_title', '')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     @stack('styles')
@@ -261,7 +262,7 @@
                             <i class="fa-solid fa-bars fs-5"></i>
                         </button>
                         {{-- back button --}}
-                        <a href="{{ url()->previous() ?? route('admin.dashboard') }}"
+                        <a href="{{ url()->previous() ?: route('dashboard') }}"
                             class="btn btn-light border-0 mx-2 shadow-sm d-none d-md-inline-block" title="Go Back">
                             <i class="fa-solid fa-arrow-left fs-5"></i>
                         </a>
@@ -282,7 +283,8 @@
                         <div class="dropdown">
                             <a class="d-flex align-items-center text-decoration-none" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="me-2 fw-medium text-dark d-none d-sm-inline-block">{{ explode(' ', (Auth::user()->name ?? 'Admin'))[0] }}</span>
+                                <span
+                                    class="me-2 fw-medium text-dark d-none d-sm-inline-block">{{ explode(' ', (Auth::user()->name ?? 'Admin'))[0] }}</span>
                                 <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center shadow-sm"
                                     style="width: 38px; height: 38px; font-size: 1.1rem;">
                                     {{ substr(Auth::user()->name ?? 'A', 0, 1) }}
@@ -414,6 +416,99 @@
         @endif
 
     @endforeach
+
+    {{-- link table-search.js --}}
+
+    <script>
+       // Reusable table search function
+function setupTableSearch(searchInputId, tableSelector) {
+    const searchInput = document.getElementById(searchInputId);
+    const tableBody = document.querySelector(tableSelector + ' tbody');
+    const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+
+        rows.forEach(row => {
+            // Get all cells except the last one (Actions column)
+            const cells = Array.from(row.cells).slice(0, -1);
+            const rowText = cells.map(cell => cell.textContent.toLowerCase()).join(' ');
+
+            if (rowText.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+}
+
+// Reusable table sorting function
+function setupTableSorting(tableSelector) {
+    const table = document.querySelector(tableSelector);
+    if (!table) {
+        return;
+    }
+
+    const tableBody = table.querySelector('tbody');
+    const sortableHeaders = Array.from(table.querySelectorAll('.sortable'));
+
+    sortableHeaders.forEach(header => {
+        header.addEventListener('click', function () {
+            const currentSort = this.dataset.sort || 'asc';
+            const newSort = currentSort === 'asc' ? 'desc' : 'asc';
+            const columnIndex = this.cellIndex;
+
+            sortableHeaders.forEach(h => {
+                if (h !== this) {
+                    delete h.dataset.sort;
+                    const hIcon = h.querySelector('i');
+                    if (hIcon) {
+                        hIcon.className = 'fa-solid fa-sort';
+                    }
+                }
+            });
+
+            this.dataset.sort = newSort;
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.className = newSort === 'asc' ? 'fa-solid fa-sort-up' : 'fa-solid fa-sort-down';
+            }
+
+            const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+            const sortedRows = rows.sort((a, b) => {
+                const aValue = getCellText(a, columnIndex);
+                const bValue = getCellText(b, columnIndex);
+                const aNumber = parseFloat(aValue);
+                const bNumber = parseFloat(bValue);
+                const isNumeric = !Number.isNaN(aNumber) && !Number.isNaN(bNumber);
+
+                const first = isNumeric ? aNumber : aValue;
+                const second = isNumeric ? bNumber : bValue;
+
+                if (first === second) {
+                    return 0;
+                }
+
+                if (newSort === 'asc') {
+                    return first > second ? 1 : -1;
+                }
+
+                return first < second ? 1 : -1;
+            });
+
+            sortedRows.forEach(row => tableBody.appendChild(row));
+        });
+    });
+
+    function getCellText(row, index) {
+        const cell = row.cells[index];
+        return cell ? cell.textContent.trim().toLowerCase() : '';
+    }
+}
+
+    </script>
 
     {{--
     <script>

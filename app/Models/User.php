@@ -29,4 +29,11 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    public function tenants()
+    {
+        return $this->belongsToMany(Tenant::class)->withTimestamps();
+    }
+
+    
 }
