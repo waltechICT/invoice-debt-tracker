@@ -20,16 +20,16 @@
 
         <li class="nav-section-title">Network Audit</li> --}}
 
-        {{-- tenant dropdown menu --}}
+        {{-- workspace dropdown menu --}}
         <li class="nav-item has-dropdown">
             <a href="{{ route('dashboard') }}" class="nav-link">
                 <i class="fa-solid fa-building fa-fw"></i>
-                <span>Tenants</span>
+                <span>Workspaces</span>
                 <i class="fa-solid fa-chevron-down dropdown-toggle-icon"></i>
             </a>
             <ul class="sidebar-dropdown-menu">
-                <li><a href="{{ route('tenant.index') }}">Tenants</a></li>
-                <li><a href="{{ route('tenant.create') }}">Add Tenant</a></li>
+                <li><a href="{{ route('workspace.index') }}">Workspaces</a></li>
+                <li><a href="{{ route('workspace.create') }}">Add Workspace</a></li>
             </ul>
         </li>
 

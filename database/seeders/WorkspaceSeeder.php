@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Tenant;
 use App\Models\User;
+use App\Models\Workspace;
 use Illuminate\Database\Seeder;
 
-class TenantSeeder extends Seeder
+class WorkspaceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $tenants = [
+        $workspaces = [
             [
                 'name' => 'Acme Corporation',
                 'slug' => 'acme-corp',
@@ -46,11 +46,11 @@ class TenantSeeder extends Seeder
 
         $owner = User::first();
 
-        foreach ($tenants as $tenant) {
-            $tenant['owner_id'] = $owner?->id;
-            $created = Tenant::updateOrCreate(
-                ['slug' => $tenant['slug']],
-                $tenant
+        foreach ($workspaces as $workspace) {
+            $workspace['owner_id'] = $owner?->id;
+            $created = Workspace::updateOrCreate(
+                ['slug' => $workspace['slug']],
+                $workspace
             );
 
             if ($owner) {

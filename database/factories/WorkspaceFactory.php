@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Tenant;
+use App\Models\Workspace;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Tenant>
+ * @extends Factory<Workspace>
  */
-class TenantFactory extends Factory
+class WorkspaceFactory extends Factory
 {
     /**
      * Define the model's default state.

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TenantController;
+use App\Http\Controllers\WorkspaceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,14 +13,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // tenant management routes
-    Route::get('/tenant', [TenantController::class, 'index'])->name('tenant.index');
-    Route::get('/tenant/create', [TenantController::class, 'create'])->name('tenant.create');
-    Route::post('/tenant', [TenantController::class, 'store'])->name('tenant.store');
-    Route::get('/tenant/{tenant}', [TenantController::class, 'show'])->name('tenant.show');
-    Route::get('/tenant/{tenant}/edit', [TenantController::class, 'edit'])->name('tenant.edit');
-    Route::put('/tenant/{tenant}', [TenantController::class, 'update'])->name('tenant.update');
-    Route::delete('/tenant/{tenant}', [TenantController::class, 'destroy'])->name('tenant.destroy');
+    // workspace management routes
+    Route::get('/workspace', [WorkspaceController::class, 'index'])->name('workspace.index');
+    Route::get('/workspace/create', [WorkspaceController::class, 'create'])->name('workspace.create');
+    Route::post('/workspace', [WorkspaceController::class, 'store'])->name('workspace.store');
+    Route::get('/workspace/{workspace}', [WorkspaceController::class, 'show'])->name('workspace.show');
+    Route::get('/workspace/{workspace}/edit', [WorkspaceController::class, 'edit'])->name('workspace.edit');
+    Route::put('/workspace/{workspace}', [WorkspaceController::class, 'update'])->name('workspace.update');
+    Route::delete('/workspace/{workspace}', [WorkspaceController::class, 'destroy'])->name('workspace.destroy');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

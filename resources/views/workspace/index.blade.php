@@ -1,25 +1,25 @@
 @extends('layouts.app')
 {{-- page title --}}
-@section('page_title', 'Tenant Management')
+@section('page_title', 'Workspace Management')
 @section('content')
 
     <div class="container-fluid py-2">
         <div class="mb-4">
-            <h2 class="fs-4 fw-bold text-dark mb-1">My Tenants</h2>
-            <p class="text-muted small mb-0">Manage and view all tenants in the system.</p>
+            <h2 class="fs-4 fw-bold text-dark mb-1">My Workspaces</h2>
+            <p class="text-muted small mb-0">Manage and view all workspaces in the system.</p>
 
             {{-- Create class button with plus icon--}}
-            <a href="{{ route('tenant.create') }}" class="btn btn-sm btn-primary mt-2">
-                <i class="bi bi-plus-lg"></i> Create New Tenant
+            <a href="{{ route('workspace.create') }}" class="btn btn-sm btn-primary mt-2">
+                <i class="bi bi-plus-lg"></i> Create New Workspace
             </a>
         </div>
 
         <div class="card border border-light shadow-sm rounded-4 overflow-hidden">
             <div
                 class="card-header bg-white p-4 border-bottom d-flex flex-wrap gap-2 justify-content-between align-items-center">
-                <h5 class="fw-bold text-dark mb-0 fs-6">Tenant List</h5>
-                <input type="text" id="tenantSearch" class="form-control form-control-sm w-auto"
-                    placeholder="Search tenants..." style="max-width: 300px;">
+                <h5 class="fw-bold text-dark mb-0 fs-6">Workspace List</h5>
+                <input type="text" id="workspaceSearch" class="form-control form-control-sm w-auto"
+                    placeholder="Search workspaces..." style="max-width: 300px;">
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -29,47 +29,47 @@
                                 <th scope="col" class="px-4 py-3">SN</th>
                                 <th scope="col" class="px-4 py-3 sortable cursor-pointer" data-column="name"
                                     style="cursor: pointer;">
-                                    Name <i class="bi bi-arrow-down-up ms-1" style="font-size: 0.75rem;"></i>
+                                    Name <i class="bi bi-chevron-expand ms-1" style="font-size: 0.75rem;"></i>
                                 </th>
                                 <th scope="col" class="px-4 py-3 sortable cursor-pointer" data-column="subdomain"
                                     style="cursor: pointer;">
-                                    Subdomain <i class="bi bi-arrow-down-up ms-1" style="font-size: 0.75rem;"></i>
+                                    Subdomain <i class="bi bi-chevron-expand ms-1" style="font-size: 0.75rem;"></i>
                                 </th>
                                 <th scope="col" class="px-4 py-3 sortable cursor-pointer" data-column="status"
                                     style="cursor:pointer">
-                                    Status <i class="bi bi-arrow-down-up ms-1" style="font-size: 0.75rem;"></i>
+                                    Status <i class="bi bi-chevron-expand ms-1" style="font-size: 0.75rem;"></i>
                                 </th>
                                 <th scope="col" class="px-4 py-3">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if ($tenants->isEmpty())
+                            @if ($workspaces->isEmpty())
                                 <tr>
-                                    <td colspan="5" class="text-center py-4">No tenants found. Create a new tenant to get started.</td>
+                                    <td colspan="5" class="text-center py-4">No workspaces found. Create a new workspace to get started.</td>
                                 </tr>
                             @endif
-                            @foreach ($tenants as $key => $tenant)
+                            @foreach ($workspaces as $key => $workspace)
                                 <tr>
                                     <th scope="row" class="px-4 py-3">{{ $key + 1 }}</th>
-                                    <td class="px-4 py-3">{{ $tenant->name }}</td>
-                                    <td class="px-4 py-3">{{ $tenant->subdomain }}</td>
+                                    <td class="px-4 py-3">{{ $workspace->name }}</td>
+                                    <td class="px-4 py-3">{{ $workspace->subdomain }}</td>
                                     <td class="px-4 py-3">
-                                        @if ($tenant->is_active)
+                                        @if ($workspace->is_active)
                                             <span class="badge bg-success">Active</span>
                                         @else
                                             <span class="badge bg-secondary">Inactive</span>
                                         @endif
                                     </td>
                                     <td class="px-4 py-3">
-                                        <a href="{{ route('tenant.show', $tenant->id) }}" class="btn btn-sm btn-secondary me-1">
+                                        <a href="{{ route('workspace.show', $workspace->id) }}" class="btn btn-sm btn-secondary me-1">
                                             <i class="bi bi-eye"></i> View
                                         </a>
-                                        <a href="{{ route('tenant.edit', $tenant->id) }}" class="btn btn-sm btn-info me-1">
+                                        <a href="{{ route('workspace.edit', $workspace->id) }}" class="btn btn-sm btn-info me-1">
                                             <i class="bi bi-pencil-square"></i> Edit
                                         </a>
-                                        <form action="{{ route('tenant.destroy', $tenant->id) }}" method="POST"
+                                        <form action="{{ route('workspace.destroy', $workspace->id) }}" method="POST"
                                             class="d-inline-block"
-                                            onsubmit="return confirm('Are you sure you want to delete this tenant?');">
+                                            onsubmit="return confirm('Are you sure you want to delete this workspace?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger">
@@ -86,7 +86,7 @@
                 </div>
                 {{-- pagination links --}}
                 <div class="card-footer d-flex justify-content-end">
-                    {{ $tenants->links() }}
+                    {{ $workspaces->links() }}
                 </div>
             </div>
         </div>
@@ -95,7 +95,7 @@
     @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                setupTableSearch('tenantSearch', 'table');
+                setupTableSearch('workspaceSearch', 'table');
                 setupTableSorting('table');
             });
 
@@ -180,7 +180,7 @@
                     if (header === activeHeader) {
                         icon.className = ascending ? 'bi bi-sort-up ms-1' : 'bi bi-sort-down ms-1';
                     } else {
-                        icon.className = 'bi bi-arrow-down-up ms-1';
+                        icon.className = 'bi bi-chevron-expand ms-1';
                     }
                 });
             }
