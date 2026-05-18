@@ -22,6 +22,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/workspace/{workspace}', [WorkspaceController::class, 'update'])->name('workspace.update');
     Route::delete('/workspace/{workspace}', [WorkspaceController::class, 'destroy'])->name('workspace.destroy');
 
+    $workspaceRouteDomain = parse_url(config('app.url'), PHP_URL_HOST) ?: 'localhost';
+    Route::domain('{subdomain}.' . $workspaceRouteDomain)->group(function () {
+        Route::get('/show', [WorkspaceController::class, 'showBySubdomain'])->name('workspace.subdomain.show');
+        // switch workspace route
+        Route::get('/switch', [WorkspaceController::class, 'switch'])->name('workspace.switch');
+    });
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

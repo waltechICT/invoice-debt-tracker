@@ -44,14 +44,15 @@ class WorkspaceController extends Controller
             'metadata' => ['nullable', 'json'],
         ]);
 
-        $workspace = Workspace::create([
-            'owner_id' => Auth::id(),
-            'name' => $validated['name'],
-            'slug' => $validated['slug'],
-            'subdomain' => $validated['subdomain'] ?? null,
-            'metadata' => isset($validated['metadata']) ? json_decode($validated['metadata'], true) : null,
-            'is_active' => true,
-        ]);
+        $workspace = Workspace::create(
+            [
+                'owner_id' => Auth::id(),
+                'name' => $validated['name'],
+                'slug' => $validated['slug'],
+                'subdomain' => $validated['subdomain'] ?? null,
+                'metadata' => isset($validated['metadata']) ? json_decode($validated['metadata'], true) : null,
+            ]
+        );
 
         $workspace->users()->attach(Auth::id(), ['role' => 'owner', 'is_active' => true]);
 
@@ -63,6 +64,28 @@ class WorkspaceController extends Controller
      */
     public function show(Workspace $workspace)
     {
+        abort_unless(Auth::id() === $workspace->owner_id, 403);
+
+        return view('workspace.show', ['workspace' => $workspace]);
+    }
+
+    public function switch(string $subdomain)
+    {
+        $workspace = Workspace::where('subdomain', $subdomain)->firstOrFail();
+
+        abort_unless(Auth::id() === $workspace->owner_id, 403);
+
+        // redirect to the workspace subdomain
+        return redirect()->route('workspace.index')->with('success', 'Switched to workspace: ' . $workspace->name);
+    }
+
+    /**
+     * Show the workspace by its subdomain.
+     */
+    public function showBySubdomain(string $subdomain)
+    {
+        $workspace = Workspace::where('subdomain', $subdomain)->firstOrFail();
+
         abort_unless(Auth::id() === $workspace->owner_id, 403);
 
         return view('workspace.show', ['workspace' => $workspace]);

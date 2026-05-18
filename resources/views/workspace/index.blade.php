@@ -5,13 +5,37 @@
 
     <div class="container-fluid py-2">
         <div class="mb-4">
-            <h2 class="fs-4 fw-bold text-dark mb-1">My Workspaces</h2>
+            <div class="col-12 my-3 bg-secondary bg-opacity-10 p-4 rounded-4 border border-secondary shadow-sm">
+                <h2 class="fs-4 fw-bold text-dark mb-1">
+                    <i class="bi bi-diagram-3-fill me-2"></i> Workspaces <br>
+                </h2>
+
+                Current workspace: <span class="badge bg-info">{{ $currentWorkspace ? $currentWorkspace->name : 'None' }}</span>
+                total workspaces: <span class="badge bg-secondary">{{ $workspaces->total() }}</span>
+
+            </div>
+               
+              
             <p class="text-muted small mb-0">Manage and view all workspaces in the system.</p>
 
             {{-- Create class button with plus icon--}}
             <a href="{{ route('workspace.create') }}" class="btn btn-sm btn-primary mt-2">
                 <i class="bi bi-plus-lg"></i> Create New Workspace
             </a>
+
+            {{-- switch to workspace (subdomain based) --}}
+            <select class="form-select form-select-sm d-inline-block w-auto ms-2 btn btn-secondary"
+                onchange="if (this.value) window.location.href = this.value">
+
+                <option value="">Switch Workspace</option>
+
+                @foreach ($workspaces as $workspace)
+                    <option value="{{ route('workspace.switch', ['subdomain' => $workspace->subdomain]) }}">
+                        {{ $workspace->name }}
+                    </option>
+                @endforeach
+
+            </select>
         </div>
 
         <div class="card border border-light shadow-sm rounded-4 overflow-hidden">
@@ -45,13 +69,24 @@
                         <tbody>
                             @if ($workspaces->isEmpty())
                                 <tr>
-                                    <td colspan="5" class="text-center py-4">No workspaces found. Create a new workspace to get started.</td>
+                                    <td colspan="5" class="text-center py-4">No workspaces found. Create a new workspace to get
+                                        started.</td>
                                 </tr>
                             @endif
                             @foreach ($workspaces as $key => $workspace)
                                 <tr>
                                     <th scope="row" class="px-4 py-3">{{ $key + 1 }}</th>
-                                    <td class="px-4 py-3">{{ $workspace->name }}</td>
+                                    <td class="px-4 py-3">
+                                        {{ $workspace->name }}
+                                        @if ($workspace->subdomain)
+                                            <br>
+                                            <span class="text-muted small">Switch</span>
+                                            <a
+                                                href="{{ route('workspace.switch', ['subdomain' => $workspace->subdomain]) }}">
+                                                {{ $workspace->name }}
+                                            </a>
+                                        @endif
+                                    </td>
                                     <td class="px-4 py-3">{{ $workspace->subdomain }}</td>
                                     <td class="px-4 py-3">
                                         @if ($workspace->is_active)
@@ -61,10 +96,17 @@
                                         @endif
                                     </td>
                                     <td class="px-4 py-3">
-                                        <a href="{{ route('workspace.show', $workspace->id) }}" class="btn btn-sm btn-secondary me-1">
+                                        {{-- switch to workspace--}}
+                                        {{-- <a href="{{ route('workspace.switch', $workspace->id) }}"
+                                            class="btn btn-sm btn-primary me-1">
+                                            <i class="bi bi-box-arrow-in-right"></i> Switch to
+                                        </a> --}}
+                                        <a href="{{ route('workspace.show', $workspace->id) }}"
+                                            class="btn btn-sm btn-secondary me-1">
                                             <i class="bi bi-eye"></i> View
                                         </a>
-                                        <a href="{{ route('workspace.edit', $workspace->id) }}" class="btn btn-sm btn-info me-1">
+                                        <a href="{{ route('workspace.edit', $workspace->id) }}"
+                                            class="btn btn-sm btn-info me-1">
                                             <i class="bi bi-pencil-square"></i> Edit
                                         </a>
                                         <form action="{{ route('workspace.destroy', $workspace->id) }}" method="POST"

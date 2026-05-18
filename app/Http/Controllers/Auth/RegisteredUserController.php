@@ -39,14 +39,14 @@ class RegisteredUserController extends Controller
         // fist user given owner role
         $isFirstUser = User::count() === 0;
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'phone' => $request->phone ?? null,
-            'address' => $request->address ?? null,
-            'role' => $isFirstUser ? 'owner' : 'user',
-        ]);
+        $user = User::create(
+            [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $isFirstUser ? 'owner' : 'user',
+            ]
+        );
 
         event(new Registered($user));
 

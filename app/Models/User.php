@@ -10,12 +10,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+
+    // fillable and hidden attributes
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+      ];
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     /**
      * Get the attributes that should be cast.
